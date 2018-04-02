@@ -1,4 +1,13 @@
 // @flow
 import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
+import Routes from "./../routes/routes";
 
-export default () => <h1> Ready To Start </h1>;
+const Main = () => (
+      <Router>
+        <Routes />
+      </Router>
+    );
+
+
+export default Main;
