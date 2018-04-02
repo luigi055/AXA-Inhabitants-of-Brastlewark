@@ -8,39 +8,65 @@ import {
   GnomeInfoListDetails
 } from "./DetailsInfoStyled";
 
-const DetailsInfo = () => (
-  <GnomeDetails hairColor={convertColorsToHex("red")}>
+type Props = {
+  gnome: {
+    id: number,
+    name: string,
+    thumbnail: string,
+    age: number,
+    weight: number,
+    height: number,
+    hair_color: string,
+    professions: Array<string>,
+    friends: Array<string>
+  }
+};
+
+const DetailsInfo = ({ gnome }: Props) => (
+  <GnomeDetails hairColor={convertColorsToHex(gnome && gnome.hair_color)}>
     <div className="banner" />
-    <Avatar src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7397s57QFwqPXVkOrTlf2g4z0m73Sl3acuODleLVVMSBb-3e3">
+    <Avatar src={gnome && gnome.thumbnail}>
       <img
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7397s57QFwqPXVkOrTlf2g4z0m73Sl3acuODleLVVMSBb-3e3"
-        alt="avatar"
+        src={gnome && gnome.thumbnail}
+        alt={`avatar ${gnome && gnome.name}`}
       />
     </Avatar>
     <header className="description">
-      <h2>Luis Olivero</h2>
-      <div>Runner || Hunter || Trader</div>
+      <h2>{gnome && gnome.name}</h2>
+      <div>
+        {gnome.professions.length > 0
+          ? gnome.professions.join(" || ")
+          : "No Profession"}
+      </div>
     </header>
     <GnomeInfoDetails>
-      <GnomeInfoListDetails hairColor={convertColorsToHex("red")}>
+      <GnomeInfoListDetails
+        hairColor={gnome && convertColorsToHex(gnome.hair_color)}
+      >
         <span>Age</span>
-        <span>170</span>
+        <span>{gnome && gnome.age}</span>
       </GnomeInfoListDetails>
-      <GnomeInfoListDetails hairColor={convertColorsToHex("red")}>
+      <GnomeInfoListDetails
+        hairColor={gnome && convertColorsToHex(gnome.hair_color)}
+      >
         <span>Weight</span>
         <span>
-          60 <span className="unit">KG</span>
+          {gnome && Math.ceil(gnome.weight)} <span className="unit">KG</span>
         </span>
       </GnomeInfoListDetails>
-      <GnomeInfoListDetails hairColor={convertColorsToHex("red")}>
+      <GnomeInfoListDetails
+        hairColor={gnome && convertColorsToHex(gnome.hair_color)}
+      >
         <span>Height</span>
         <span>
-          90 <span className="unit">CM</span>
+          {gnome && Math.ceil(gnome.height)} <span className="unit">CM</span>
         </span>
       </GnomeInfoListDetails>
-      <GnomeInfoListDetails hairColor={convertColorsToHex("red")}>
+      <GnomeInfoListDetails
+        hairColor={gnome && convertColorsToHex(gnome.hair_color)}
+      >
         <span>Hair color</span>
-        <span>RED</span>
+        <span>{gnome && gnome.hair_color.toUpperCase()}</span>
       </GnomeInfoListDetails>
     </GnomeInfoDetails>
     <div className="banner-footer" />
