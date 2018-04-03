@@ -3,9 +3,11 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Card from "./../../components/Card/Card";
 import * as actions from "./../../redux/actions/actions";
-import { HomeRow, HomeWrapper, FormSearch } from "./HomeStyled";
+import { HomeRow, HomeWrapper, FormSearch, FormRow } from "./HomeStyled";
 import AutoCompleteInput from "./../../components/AutoCompleteInput/AutoCompleteInput";
 import Select from "./../../components/Select/Select";
+import { OrderByBTN, ResetBTN } from "./../../components/OrderByBTN/OrderByBTN";
+
 import type { State } from "./../../../flow-typed/types";
 
 type Props = State;
@@ -13,9 +15,10 @@ type Props = State;
 class Home extends Component<Props> {
   updateSearchTerm = (term: string) => this.props.getSearchText(term);
   updateFilterJob = (job: string) => this.props.filterByJob(job);
+  updateOrderBy = (order: string) => this.props.orderBy(order);
 
   render() {
-    const { searchTerm, gnomes } = this.props;
+    const { searchTerm, gnomes, orderByFilter } = this.props;
     const gnomeNames = this.props.gnomes.map(gnome => gnome.name);
     let getJobs = [];
     /* eslint-disable */
@@ -47,6 +50,58 @@ class Home extends Component<Props> {
               updateState={this.updateFilterJob}
               state={this.props}
             />
+            <FormRow>
+              <OrderByBTN
+                orderBy={orderByFilter}
+                updateOrderBy={this.updateOrderBy}
+              >
+                Oldest
+              </OrderByBTN>
+              <OrderByBTN
+                orderBy={orderByFilter}
+                updateOrderBy={this.updateOrderBy}
+              >
+                Youngest
+              </OrderByBTN>
+              <OrderByBTN
+                orderBy={orderByFilter}
+                updateOrderBy={this.updateOrderBy}
+              >
+                weighest
+              </OrderByBTN>
+              <OrderByBTN
+                orderBy={orderByFilter}
+                updateOrderBy={this.updateOrderBy}
+              >
+                weighless
+              </OrderByBTN>
+              <OrderByBTN
+                orderBy={orderByFilter}
+                updateOrderBy={this.updateOrderBy}
+              >
+                Most Popular
+              </OrderByBTN>
+              <OrderByBTN
+                orderBy={orderByFilter}
+                updateOrderBy={this.updateOrderBy}
+              >
+                Less Popular
+              </OrderByBTN>
+              <OrderByBTN
+                updateOrderBy={this.updateOrderBy}
+                orderBy={orderByFilter}
+              >
+                Hair Color
+              </OrderByBTN>
+              <ResetBTN
+                updateOrderBy={this.updateOrderBy}
+                updateSearchTerm={this.updateSearchTerm}
+                updateFilterJob={this.updateFilterJob}
+                orderBy={orderByFilter}
+              >
+                Reset
+              </ResetBTN>
+            </FormRow>
           </FormSearch>
         </HomeRow>
         <HomeRow>
@@ -80,14 +135,17 @@ class Home extends Component<Props> {
     );
   }
 }
+
 Home.handleSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
   event.preventdefault();
-}
+};
+
 function mapStateToProps(state: State) {
   return {
     searchTerm: state.searchTerm,
     gnomes: state.gnomes,
-    filterBy: state.filterBy
+    filterBy: state.filterBy,
+    orderByFilter: state.orderBy
   };
 }
 

@@ -60,7 +60,7 @@ Suggestions.selectCompletion = (
     suggestedItems: [],
     currentOption: 0
   });
-  updateParentState(event.target.textContent);
+  updateParentState(event.currentTarget.textContent);
 };
 
 Suggestions.mouseOverSuggestion = (

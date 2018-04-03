@@ -195,11 +195,6 @@ AutoCompleteInput.handleCloseAutoComplete = (
   state: string,
   updateParentState: Function
 ) => (event: SyntheticKeyboardEvent<HTMLInputElement>) => {
-  // const suggestedItemLength =
-  //   suggestedItems.length === 0
-  //     ? suggestedItems.length
-  //     : suggestedItems.length - 1;
-  // console.log(suggestedItemLength);
   // Close autocomplete when press Enter or Esc
   if (event.which === 27) {
     updateLocalState({

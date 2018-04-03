@@ -15,6 +15,14 @@ export const HomeWrapper = styled.main`
   }
 `;
 
+export const FormRow = HomeWrapper.withComponent("div").extend`
+  background: inherit;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+`;
+
 export const HomeRow = styled.div`
   background: #fff;
   border-radius: 5px;

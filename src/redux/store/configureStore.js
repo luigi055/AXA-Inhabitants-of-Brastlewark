@@ -6,7 +6,8 @@ import reducers from "./../reducers/reducers";
 const initialValues = {
   gnomes: [],
   searchTerm: "",
-  filterBy: "All"
+  filterBy: "All",
+  orderBy: ""
 };
 
 const configure = (initialState = initialValues) => {
