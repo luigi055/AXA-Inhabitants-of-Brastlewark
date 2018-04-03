@@ -1,6 +1,6 @@
 // @flow
 import axios from "axios";
-import { REQUEST_GNOMES, SEARCH_TERM } from "./types";
+import { REQUEST_GNOMES, SEARCH_TERM, FILTER_BY_JOB } from "./types";
 
 /* eslint-disable */
 export const fetchGnomes = () => async (dispatch: Function) => {
@@ -25,3 +25,7 @@ export const getSearchText = (searchTerm: string) => ({
   payload: searchTerm
 });
 
+export const filterByJob = (job: string) => ({
+  type: FILTER_BY_JOB,
+  payload: job
+});

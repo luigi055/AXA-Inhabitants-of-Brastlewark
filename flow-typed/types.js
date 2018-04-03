@@ -22,7 +22,7 @@ export type State = {
   searchTerm: string
 };
 
-declare type ActionType = "REQUEST_GNOMES" | "SEARCH_TERM";
+declare type ActionType = "REQUEST_GNOMES" | "SEARCH_TERM" | "FILTER_BY_JOB";
 
 declare type ActionT<A: ActionType, P> = {|
   type: A,
@@ -32,3 +32,4 @@ declare type ActionT<A: ActionType, P> = {|
 export type Action =
   | ActionT<"SEARCH_TERM", string>
   | ActionT<"REQUEST_GNOMES", Gnome>;
+  | ActionT<"FILTER_BY_JOB", string>;

@@ -206,11 +206,19 @@ AutoCompleteInput.handleCloseAutoComplete = (
       open: false,
       suggestedItems: []
     });
-  } else if (event.keyCode === 13 || event.keyCode === 39) {
+  } else if (event.keyCode === 13) {
     // When Enter
     updateLocalState(prevState => ({
       open: false,
       searchTerm: prevState.suggestedItems[prevState.currentOption],
+      suggestedItems: [],
+      currentOption: 0
+    }));
+    updateParentState(state.suggestedItems[state.currentOption]);
+  } else if (event.keyCode === 39) {
+    // When right arrow
+    updateLocalState(() => ({
+      open: false,
       suggestedItems: [],
       currentOption: 0
     }));

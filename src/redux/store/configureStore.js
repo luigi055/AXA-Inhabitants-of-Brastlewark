@@ -3,7 +3,13 @@ import { applyMiddleware, createStore, compose } from "redux";
 import thunk from "redux-thunk";
 import reducers from "./../reducers/reducers";
 
-const configure = (initialState = {}) => {
+const initialValues = {
+  gnomes: [],
+  searchTerm: "",
+  filterBy: "All"
+};
+
+const configure = (initialState = initialValues) => {
   const composeEnhancers =
     /* eslint-disable */
     // Deactivate redux devtools if production
