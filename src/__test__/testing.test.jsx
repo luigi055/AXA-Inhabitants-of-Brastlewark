@@ -1,3 +1,4 @@
+// @flow
 import React from "react";
 import chai, { expect } from "chai";
 /*eslint-disable */

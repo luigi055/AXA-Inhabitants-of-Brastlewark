@@ -5,14 +5,19 @@
   "main": "server.js",
   "scripts": {
     "clear": "rm -rf ./public",
-    "start": "npm run clear && export NODE_ENV=production || SET \"NODE_ENV=production\" && webpack --mode production --optimize-minimize && node server.js",
-    "dev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --mode development",
+    "start":
+      "npm run clear && export NODE_ENV=production || SET \"NODE_ENV=production\" && webpack --mode production --optimize-minimize && node server.js",
+    "dev":
+      "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --mode development",
     "build:dev": "rm -rf ./public && webpack",
     "build:dev--watch": "webpack -d -w",
-    "build": "export NODE_ENV=production || SET \"NODE_ENV=production\" && rm -rf ./public && webpack -p",
+    "build":
+      "export NODE_ENV=production || SET \"NODE_ENV=production\" && rm -rf ./public && webpack -p",
     "lint": "eslint **/*.{js, jsx} --quiet",
-    "format": "prettier --write --single-quote --print-width=120 --parser=flow --tab-width=2 \"src/**/*.{js, jsx}\"",
-    "test": "export NODE_ENV=test || SET \"NODE_ENV=test\" && mocha ./src/__test__/**/*.test.jsx --require babel-register",
+    "format":
+      "prettier --write --single-quote --print-width=120 --parser=flow --tab-width=2 \"src/**/*.{js, jsx}\"",
+    "test":
+      "export NODE_ENV=test || SET \"NODE_ENV=test\" && mocha ./src/__test__/**/*.test.jsx --require babel-register --require babel-polyfill",
     "test:watch": "yarn run test --watch",
     "flow:init": "flow init",
     "flow:status": "flow status",
@@ -25,13 +30,7 @@
     "type": "git",
     "url": "git@github.com:luigi055/AXA-Inhabitants-of-Brastlewark.git"
   },
-  "keywords": [
-    "react",
-    "redux",
-    "react-router-v4",
-    "webpack4",
-    "boilerplate"
-  ],
+  "keywords": ["react", "redux", "react-router-v4", "webpack4", "boilerplate"],
   "author": "Pedro La Rosa",
   "license": "MIT",
   "devDependencies": {
@@ -63,6 +62,7 @@
     "eslint-plugin-prettier": "2.6.0",
     "eslint-plugin-react": "7.7.0",
     "extract-text-webpack-plugin": "4.0.0-alpha.0",
+    "fetch-mock": "^6.3.0",
     "file-loader": "1.1.11",
     "flow-bin": "0.69.0",
     "html-loader": "0.5.5",
@@ -74,6 +74,7 @@
     "prettier": "1.11.1",
     "react-hot-loader": "4.0.0",
     "react-test-renderer": "16.3.0",
+    "redux-mock-store": "^1.5.1",
     "resolve-url-loader": "2.3.0",
     "sass-loader": "6.0.7",
     "script-loader": "0.7.2",

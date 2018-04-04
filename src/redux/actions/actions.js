@@ -1,11 +1,17 @@
 // @flow
 import axios from "axios";
+import type { Gnome } from "./../../../flow-typed/types";
 import {
   REQUEST_GNOMES,
   SEARCH_TERM,
   FILTER_BY_JOB,
   ORDER_BY_FILTER
 } from "./types";
+
+export const getGnomes = (gnomes: Array<Gnome>) => ({
+  type: REQUEST_GNOMES,
+  payload: gnomes
+});
 
 /* eslint-disable */
 export const fetchGnomes = () => async (dispatch: Function) => {
@@ -15,10 +21,7 @@ export const fetchGnomes = () => async (dispatch: Function) => {
     );
 
     const gnomes = Brastlewark.map(findGnome => findGnome);
-    dispatch({
-      type: REQUEST_GNOMES,
-      payload: gnomes
-    });
+    dispatch(getGnomes(gnomes));
   } catch (err) {
     throw new Error(err);
   }
