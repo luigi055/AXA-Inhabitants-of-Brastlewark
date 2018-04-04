@@ -3,11 +3,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
 import * as actions from "./../redux/actions/actions";
+import Loading from "./../components/Loading/Loading";
 import Routes from "./../routes/routes";
 
 type Props = {
   fetchGnomes: Function,
-  gnomes: Array<object>
+  gnomes: Array<Gnome>
 };
 
 class Main extends Component<Props> {
@@ -18,7 +19,11 @@ class Main extends Component<Props> {
   render() {
     return (
       <Router>
-        <Routes gnome={this.props.gnomes} />
+        {this.props.gnomes.length === 0 ? (
+          <Loading />
+        ) : (
+          <Routes gnome={this.props.gnomes} />
+        )}
       </Router>
     );
   }

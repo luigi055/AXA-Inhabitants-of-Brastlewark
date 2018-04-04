@@ -24,8 +24,12 @@ const Select = ({
       value={state[stateName] && state[stateName]}
       onChange={Select.onChange(updateState)}
     >
-      {items.concat(defaultValue).map(item => (
-        <option value={item} key={item}>
+      {[defaultValue, ...items].map(item => (
+        <option
+          value={item}
+          key={item}
+          defaultChecked={state[stateName] === item}
+        >
           {item}
         </option>
       ))}

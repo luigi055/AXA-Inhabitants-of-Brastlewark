@@ -1,6 +1,6 @@
 // @flow
 import React from "react";
-import convertColorsToHex from "./../../tools";
+import { convertColorsToHex } from "./../../functions";
 import { GnomeCard, Avatar, GnomeInfo, GnomeInfoList } from "./CardStyled";
 
 type Props = {

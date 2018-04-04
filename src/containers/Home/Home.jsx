@@ -5,9 +5,10 @@ import Card from "./../../components/Card/Card";
 import * as actions from "./../../redux/actions/actions";
 import { HomeRow, HomeWrapper, FormSearch, FormRow } from "./HomeStyled";
 import AutoCompleteInput from "./../../components/AutoCompleteInput/AutoCompleteInput";
+import EmptyMsg from "./../../components/EmptyMsg/EmptyMsg";
 import Select from "./../../components/Select/Select";
 import { OrderByBTN, ResetBTN } from "./../../components/OrderByBTN/OrderByBTN";
-
+import { filterGnomesBy } from "./../../functions";
 import type { State } from "./../../../flow-typed/types";
 
 type Props = State;
@@ -28,6 +29,25 @@ class Home extends Component<Props> {
     }
     /* eslint-enable */
     const jobs = Array.from(new Set(getJobs));
+
+    const renderFilters = filterGnomesBy(gnomes, orderByFilter)
+      .filter(gnome => {
+        // filter by profession
+        const isJob = gnome.professions.find(
+          profession => profession === this.props.filterBy
+        );
+        const hasProfession = gnome.professions.some(
+          profession => profession === isJob
+        );
+        return this.props.filterBy === "All" ? gnome : hasProfession;
+      })
+      .filter(gnome => {
+        // gnome.name.toLowerCase().search(searchTerm.toLowerCase()) === 0
+        const search =
+          gnome.name.toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0;
+        return search;
+      })
+      .slice(0, 15);
     return (
       <HomeWrapper>
         <HomeRow>
@@ -105,31 +125,17 @@ class Home extends Component<Props> {
           </FormSearch>
         </HomeRow>
         <HomeRow>
-          {gnomes
-            .filter(gnome => {
-              // filter by profession
-              const isJob = gnome.professions.find(
-                profession => profession === this.props.filterBy
-              );
-              const hasProfession = gnome.professions.some(
-                profession => profession === isJob
-              );
-              return this.props.filterBy === "All" ? gnome : hasProfession;
-            })
-            .filter(gnome => {
-              // gnome.name.toLowerCase().search(searchTerm.toLowerCase()) === 0
-              const search =
-                gnome.name.toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0;
-              return search;
-            })
-            .slice(0, 15)
-            .map(gnome => (
+          {renderFilters.length > 0 ? (
+            renderFilters.map(gnome => (
               <Card
                 key={gnome.id}
                 gnome={gnome && gnome}
                 to={`/gnomes/${gnome.id}-${gnome.name.split(" ").join("-")}`}
               />
-            ))}
+            ))
+          ) : (
+            <EmptyMsg>GNOME NOT FOUND</EmptyMsg>
+          )}
         </HomeRow>
       </HomeWrapper>
     );

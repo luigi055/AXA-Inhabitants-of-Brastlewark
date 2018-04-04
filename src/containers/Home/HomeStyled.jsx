@@ -20,6 +20,7 @@ export const FormRow = HomeWrapper.withComponent("div").extend`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  margin: 0;
   width: 100%;
 `;
 

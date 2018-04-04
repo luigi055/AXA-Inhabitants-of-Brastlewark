@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import DetailsInfo from "./../../components/DetailsInfo/DetailsInfo";
 import Card from "./../../components/Card/Card";
 import SubTitle from "./../../components/SubTitle/SubTitle";
+import EmptyMsg from "./../../components/EmptyMsg/EmptyMsg";
 import { DetailsRow, DetailsWrapper } from "./DetailsStyled";
 
 type Props = {
@@ -34,14 +35,19 @@ const Details = ({ gnomeURL, gnomes }: Props) => {
       </DetailsRow>
       <DetailsRow>
         <SubTitle text="Friends" />
-        {renderFriends &&
+        {renderFriends.length > 0 ? (
           renderFriends.map(friend => (
             <Card
               key={`${friend.id}`}
               gnome={friend}
               to={`${friend.id}-${friend.name.split(" ").join("-")}`}
             />
-          ))}
+          ))
+        ) : (
+          <EmptyMsg>
+            {selectedGnome.name.toUpperCase()} HAS NOT FRIENDS :(
+          </EmptyMsg>
+        )}
       </DetailsRow>
     </DetailsWrapper>
   );

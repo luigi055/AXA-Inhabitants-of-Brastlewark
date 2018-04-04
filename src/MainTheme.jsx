@@ -32,6 +32,7 @@ html, body {
 /* eslint-enable */
 
 const theme = () => ({
+  mainColor,
   hoverColor: mainColor,
   hoverFontColor: lightColor,
   mainBG: "#fbffff",

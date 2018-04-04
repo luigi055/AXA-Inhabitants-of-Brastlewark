@@ -37,14 +37,7 @@ OrderByBTN.handleClick = updateOrderBy => (
 };
 
 export const ResetBTN = (props: Props) => (
-  <OrderButton
-    {...props}
-    onClick={ResetBTN.handleClick(
-      props.updateOrderBy,
-      props.updateSearchTerm,
-      props.updateFilterJob
-    )}
-  >
+  <OrderButton {...props} onClick={ResetBTN.handleClick(props.updateOrderBy)}>
     {props.children}
   </OrderButton>
 );
@@ -54,9 +47,9 @@ ResetBTN.defaultProps = {
   orderBy: ""
 };
 
-ResetBTN.handleClick = (updateOrderBy, updateSearchTerm, updateFilterJob) => (
+ResetBTN.handleClick = updateOrderBy => (
   event: SyntheticMouseEvent<HTMLButtonElement>
 ) => {
   event.preventDefault();
-  updateFilterJob("All");
+  updateOrderBy(event.currentTarget.textContent);
 };

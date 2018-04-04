@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import * as actions from "./../../redux/actions/actions";
 import AutoCompleteInput from "./../../components/AutoCompleteInput/AutoCompleteInput";
 import HeaderComponent from "./HeaderStyled";
+import LogoSVG from "./../../img/gnome-logo.svg";
 
 type Props = {
   gnomes: Array<string>,
@@ -21,7 +22,7 @@ class Header extends Component<Props> {
         <div className="row">
           <h1>
             <Link to="/" href="/">
-              Gnome
+              <img src={LogoSVG} alt="Brastlewarkers Logo" />
             </Link>
           </h1>
           <AutoCompleteInput

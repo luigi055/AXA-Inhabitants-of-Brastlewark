@@ -6,7 +6,7 @@ const SelectComponent = styled.label`
   color: ${({ theme }) => theme.suggestionsTXT};
   display: block;
   font-size: 1.1rem;
-  margin: 0px 0px 5px;
+  margin: 0;
   text-align: center;
   width: ${props => (props.maxWidth ? props.maxWidth : "100%")};
 
