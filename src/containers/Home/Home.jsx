@@ -1,5 +1,6 @@
 // @flow
 import React, { Component } from "react";
+import { Helmet } from "react-helmet";
 import { connect } from "react-redux";
 import Card from "./../../components/Card/Card";
 import * as actions from "./../../redux/actions/actions";
@@ -7,6 +8,7 @@ import { HomeRow, HomeWrapper, FormSearch, FormRow } from "./HomeStyled";
 import AutoCompleteInput from "./../../components/AutoCompleteInput/AutoCompleteInput";
 import EmptyMsg from "./../../components/EmptyMsg/EmptyMsg";
 import Select from "./../../components/Select/Select";
+// import AnchorBTN from "./../../components/AnchorBTN/AnchorBTN";
 import { OrderByBTN, ResetBTN } from "./../../components/OrderByBTN/OrderByBTN";
 import { filterGnomesBy } from "./../../functions";
 import type { State } from "./../../../flow-typed/types";
@@ -50,6 +52,14 @@ class Home extends Component<Props> {
       .slice(0, 15);
     return (
       <HomeWrapper>
+        <Helmet>
+          <title>BrastlewarkerS || Home</title>
+          <link rel="shortcut icon" href="favicon.ico" />
+          <meta
+            name="description"
+            content="little application where it's posible to consult information about the inhabitants of brastlewarks, age, weight, name, professions and more."
+          />
+        </Helmet>
         <HomeRow>
           <FormSearch onSubmit={Home.handleSubmit}>
             <AutoCompleteInput
@@ -87,13 +97,13 @@ class Home extends Component<Props> {
                 orderBy={orderByFilter}
                 updateOrderBy={this.updateOrderBy}
               >
-                weighest
+                Heaviest
               </OrderByBTN>
               <OrderByBTN
                 orderBy={orderByFilter}
                 updateOrderBy={this.updateOrderBy}
               >
-                weighless
+                Lightest
               </OrderByBTN>
               <OrderByBTN
                 orderBy={orderByFilter}

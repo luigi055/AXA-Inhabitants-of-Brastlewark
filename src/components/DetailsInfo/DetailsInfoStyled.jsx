@@ -31,11 +31,11 @@ export const GnomeDetails = styled.div`
     text-align: center;
 
     h2 {
-      font-size: 1.7rem;
+      font-size: 1.6rem;
       margin: 0 0 10px;
     }
     & > div {
-      font-size: 1.2rem;
+      font-size: 1rem;
       margin: 0 0 20px;
     }
   }
@@ -47,6 +47,17 @@ export const GnomeDetails = styled.div`
     position: absolute;
     width: 100%;
   }
+
+  @media screen and (min-width: 400px) {
+    header.description {
+      h2 {
+        font-size: 1.7rem;
+      }
+      & > div {
+        font-size: 1.2rem;
+      }
+    }
+  }
 `;
 
 export const Avatar = styled.div`
@@ -55,17 +66,23 @@ export const Avatar = styled.div`
   border: 4px solid ${({ theme }) => theme.cardBG};
   border-radius: 50%;
   box-sizing: border-box;
-  margin: 30px auto 0;
+  margin: 65px auto 0;
   padding: 5px;
-  height: 200px;
+  height: 130px;
   position: relative;
-  width: 200px;
+  width: 130px;
   z-index: 1;
   img {
     position: absolute;
     height: 0;
     visibility: hidden;
     width: 0;
+  }
+
+  @media screen and (min-width: 400px) {
+    height: 180px;
+    margin: 40px auto 0;
+    width: 180px;
   }
 `;
 
@@ -84,20 +101,33 @@ export const GnomeInfoListDetails = styled.li`
   span:first-child {
     color: ${({ theme }) => theme.secondaryFontColor}
     font-weight: bold;
-    font-size: 1rem;
+    font-size: 0.9rem;
     text-transform: uppercase;
     letter-spacing: 1px;
   }
   span:last-child {
     color: ${({ hairColor }) => hairColor || "#f94"};
     font-weight: bold;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     padding: 5px; 0 10px;
 
     span.unit {
       display: inline;
-      font-size: 0.9rem;
+      font-size: 0.8rem;
       margin-left: -8px;
+    }
+  }
+
+  @media screen and (min-width: 400px) {
+    span:first-child {
+      font-size: 1rem;
+    }
+    span:last-child {
+      font-size: 1.3rem;
+  
+      span.unit {
+        font-size: 0.9rem;
+      }
     }
   }
 `;

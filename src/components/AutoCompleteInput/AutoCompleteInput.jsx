@@ -80,10 +80,6 @@ class AutoCompleteInput extends Component<Props, State> {
     const { searchTerm, open } = this.state;
     return (
       <ContainerInput
-        ref={node => {
-          // Arrow function should not return an assigment
-          this.node = node;
-        }}
         className="autocomplete"
         showLabel={this.props.showLabel}
         htmlFor={this.props.stateName}

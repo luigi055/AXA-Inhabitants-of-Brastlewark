@@ -34,9 +34,9 @@ export function filterGnomesBy(array, orderByFilter) {
     return array.sort((a, b) => b.age - a.age);
   } else if (orderByFilter.toLowerCase() === "Youngest".toLowerCase()) {
     return array.sort((a, b) => a.age - b.age);
-  } else if (orderByFilter.toLowerCase() === "weighest".toLowerCase()) {
+  } else if (orderByFilter.toLowerCase() === "Heaviest".toLowerCase()) {
     return array.sort((a, b) => b.weight - a.weight);
-  } else if (orderByFilter.toLowerCase() === "weighless".toLowerCase()) {
+  } else if (orderByFilter.toLowerCase() === "lightest".toLowerCase()) {
     return array.sort((a, b) => a.weight - b.weight);
   } else if (orderByFilter.toLowerCase() === "Most Popular".toLowerCase()) {
     return array.sort((a, b) => b.friends.length - a.friends.length);
@@ -44,6 +44,11 @@ export function filterGnomesBy(array, orderByFilter) {
     return array.sort((a, b) => a.friends.length - b.friends.length);
   } else if (orderByFilter.toLowerCase() === "Reset".toLowerCase()) {
     return array.sort((a, b) => a.id - b.id);
+  } else if (orderByFilter.toLowerCase() === "hair color".toLowerCase()) {
+    /* eslint-disable */
+    // Temporally while working on this
+    alert("WORKING ON IT");
+    /* eslint-enable */
   }
 
   return array;

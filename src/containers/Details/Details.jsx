@@ -1,11 +1,17 @@
 // @flow
 import React from "react";
+import { Helmet } from "react-helmet";
 import { connect } from "react-redux";
 import DetailsInfo from "./../../components/DetailsInfo/DetailsInfo";
 import Card from "./../../components/Card/Card";
 import SubTitle from "./../../components/SubTitle/SubTitle";
 import EmptyMsg from "./../../components/EmptyMsg/EmptyMsg";
-import { DetailsRow, DetailsWrapper } from "./DetailsStyled";
+import {
+  DetailsRow,
+  DetailsWrapper,
+  FriendsRow,
+  LinkBack
+} from "./DetailsStyled";
 
 type Props = {
   gnomeURL: object,
@@ -30,10 +36,23 @@ const Details = ({ gnomeURL, gnomes }: Props) => {
 
   return (
     <DetailsWrapper>
+      <Helmet>
+        <title>BrastlewarkerS || {selectedGnome.name}</title>
+        <link rel="shortcut icon" href="favicon.ico" />
+        <meta
+          name="description"
+          content={`${selectedGnome.name} is a gnome that has ${
+            selectedGnome.hair_color
+          } hair, it's ${selectedGnome.age} and weight ${selectedGnome.weight}`}
+        />
+      </Helmet>
       <DetailsRow>
+        <LinkBack to="/" href="/">
+          {"< Back"}
+        </LinkBack>
         {selectedGnome && <DetailsInfo gnome={selectedGnome} />}
       </DetailsRow>
-      <DetailsRow>
+      <FriendsRow>
         <SubTitle text="Friends" />
         {renderFriends.length > 0 ? (
           renderFriends.map(friend => (
@@ -48,7 +67,7 @@ const Details = ({ gnomeURL, gnomes }: Props) => {
             {selectedGnome.name.toUpperCase()} HAS NOT FRIENDS :(
           </EmptyMsg>
         )}
-      </DetailsRow>
+      </FriendsRow>
     </DetailsWrapper>
   );
 };

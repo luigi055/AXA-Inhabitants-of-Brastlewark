@@ -5,7 +5,7 @@ const HeaderComponent = styled.header`
   background: ${({ theme }) => theme.headerBG};
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
   display: flex;
-  height: 60px;
+  height: 50px;
   justify-content: center;
 
   h1 {
@@ -13,16 +13,12 @@ const HeaderComponent = styled.header`
       color: ${({ theme }) => theme.logoTextColor};
       text-decoration: none;
     }
-
-    img {
-      width: auto;
-      height: 35px;
-    }
   }
 
   div.row {
+    align-items: center;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     padding: 0 5px;
     max-width: 900px;
     width: 100%;
