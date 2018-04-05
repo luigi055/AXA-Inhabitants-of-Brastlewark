@@ -15,12 +15,18 @@ export const getGnomes = (gnomes: Array<Gnome>) => ({
 
 /* eslint-disable */
 export const fetchGnomes = () => async (dispatch: Function) => {
+  const offlineGnomes = localStorage.getItem("gnomes");
+  if (offlineGnomes) {
+    const gnomes = JSON.parse(offlineGnomes);
+    return dispatch(getGnomes(gnomes));
+  }
+
   try {
-    const { data: { Brastlewark } } = await axios.get(
+    const { data: { Brastlewark: gnomes } } = await axios.get(
       "https://raw.githubusercontent.com/rrafols/mobile_test/master/data.json"
     );
-
-    const gnomes = Brastlewark.map(findGnome => findGnome);
+    const gnomesToJSON = JSON.stringify(gnomes);
+    localStorage.setItem("gnomes", gnomesToJSON);
     dispatch(getGnomes(gnomes));
   } catch (err) {
     throw new Error(err);

@@ -199,9 +199,9 @@ AutoCompleteInput.handleCloseAutoComplete = (
     });
   } else if (event.keyCode === 13) {
     // When Enter
-    updateLocalState(prevState => ({
+    updateLocalState(() => ({
       open: false,
-      searchTerm: prevState.suggestedItems[prevState.currentOption],
+      // searchTerm: prevState.suggestedItems[prevState.currentOption],
       suggestedItems: [],
       currentOption: 0
     }));

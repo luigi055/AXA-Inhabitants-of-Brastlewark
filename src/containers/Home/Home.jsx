@@ -22,6 +22,7 @@ class Home extends Component<Props> {
 
   render() {
     const { searchTerm, gnomes, orderByFilter } = this.props;
+
     const gnomeNames = this.props.gnomes.map(gnome => gnome.name);
     let getJobs = [];
     /* eslint-disable */
