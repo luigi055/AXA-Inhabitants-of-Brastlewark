@@ -1,7 +1,7 @@
 // @flow
 import styled from "styled-components";
 
-export const FormSearch = styled.form`
+export const FormSearch = styled.div`
   display: block;
   width: 100%;
 `;

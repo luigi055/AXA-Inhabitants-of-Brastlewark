@@ -23,14 +23,9 @@ export const ItemSuggestions = styled.div`
 `;
 
 export const Suggestion = styled.li`
-  background-color: ${props =>
-    props.active
-      ? `${({ theme }) => theme.suggestionsHoverBG}`
-      : "transparent"};
+  background-color: ${props => (props.active ? `#d63031` : "transparent")};
   color: ${props =>
-    props.active
-      ? `${({ theme }) => theme.suggestionsHoverTXT}`
-      : `${({ theme }) => theme.suggestionsTXT}`};
+    props.active ? `#fff` : `${({ theme }) => theme.suggestionsTXT}`};
   cursor: pointer;
   padding: 10px 15px;
 `;

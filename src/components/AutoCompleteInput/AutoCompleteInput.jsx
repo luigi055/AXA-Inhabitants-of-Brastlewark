@@ -80,6 +80,10 @@ class AutoCompleteInput extends Component<Props, State> {
     const { searchTerm, open } = this.state;
     return (
       <ContainerInput
+        ref={node => {
+          // Arrow function should not return an assigment
+          this.node = node;
+        }}
         className="autocomplete"
         showLabel={this.props.showLabel}
         htmlFor={this.props.stateName}
@@ -191,6 +195,11 @@ AutoCompleteInput.handleCloseAutoComplete = (
   state: string,
   updateParentState: Function
 ) => (event: SyntheticKeyboardEvent<HTMLInputElement>) => {
+  // const suggestedItemLength =
+  //   suggestedItems.length === 0
+  //     ? suggestedItems.length
+  //     : suggestedItems.length - 1;
+  // console.log(suggestedItemLength);
   // Close autocomplete when press Enter or Esc
   if (event.which === 27) {
     updateLocalState({
@@ -199,17 +208,19 @@ AutoCompleteInput.handleCloseAutoComplete = (
     });
   } else if (event.keyCode === 13) {
     // When Enter
-    updateLocalState(() => ({
+    updateLocalState(prevState => ({
       open: false,
       // searchTerm: prevState.suggestedItems[prevState.currentOption],
+      searchTerm: prevState.searchTerm,
       suggestedItems: [],
       currentOption: 0
     }));
-    updateParentState(state.suggestedItems[state.currentOption]);
+    // updateParentState(state.suggestedItems[state.currentOption]);
   } else if (event.keyCode === 39) {
     // When right arrow
-    updateLocalState(() => ({
+    updateLocalState(prevState => ({
       open: false,
+      searchTerm: prevState.suggestedItems[prevState.currentOption],
       suggestedItems: [],
       currentOption: 0
     }));

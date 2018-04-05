@@ -55,12 +55,12 @@ Suggestions.selectCompletion = (
 ) => (event: SyntheticMouseEvent<HTMLLiElement>) => {
   event.preventDefault();
   updateLocalState({
-    // searchTerm: event.currentTarget.textContent,
+    searchTerm: event.currentTarget.textContent,
     open: false,
     suggestedItems: [],
     currentOption: 0
   });
-  updateParentState(event.currentTarget.textContent);
+  updateParentState(event.target.textContent);
 };
 
 Suggestions.mouseOverSuggestion = (

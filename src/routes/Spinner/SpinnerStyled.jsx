@@ -23,8 +23,9 @@ export const Loading = styled.div`
   display: flex;
   justify-content: center;
   height: 100vh;
+  margin-top: -50px;
   position: relative;
-  width: 100vw;
+  width: 100%;
 `;
 
 export default Loading;
