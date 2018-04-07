@@ -1,5 +1,7 @@
 // @flow
 import * as React from "react";
+import { connect } from "react-redux";
+import * as actions from "./../../redux/actions/actions";
 import OrderButton from "./OrderByBTNStyled";
 
 type Props = {
@@ -9,16 +11,15 @@ type Props = {
   maxWidth?: string,
   highScreenWidth: string,
   updateOrderBy: Function,
-  updateSearchTerm: Function,
-  updateFilterJob: Function,
-  orderBy?: string
+  orderBy?: string,
+  getCurrentPage: Function
 };
 
-export const OrderByBTN = (props: Props) => (
+const OrderByBTN = (props: Props) => (
   <OrderButton
-    active={props.orderBy === props.children}
+    active={props.children !== 'Reset' && props.orderBy === props.children}
     {...props}
-    onClick={OrderByBTN.handleClick(props.updateOrderBy)}
+    onClick={OrderByBTN.handleClick(props.updateOrderBy, props.getCurrentPage)}
   >
     {props.children}
   </OrderButton>
@@ -29,27 +30,19 @@ OrderByBTN.defaultProps = {
   orderBy: ""
 };
 
-OrderByBTN.handleClick = updateOrderBy => (
-  event: SyntheticMouseEvent<HTMLButtonElement>
-) => {
+OrderByBTN.handleClick = (
+  updateOrderBy: Function,
+  getCurrentPage: Function
+) => (event: SyntheticMouseEvent<HTMLButtonElement>) => {
   event.preventDefault();
   updateOrderBy(event.currentTarget.textContent);
+  getCurrentPage(0);
 };
 
-export const ResetBTN = (props: Props) => (
-  <OrderButton {...props} onClick={ResetBTN.handleClick(props.updateOrderBy)}>
-    {props.children}
-  </OrderButton>
-);
+function mapStateToProps(state) {
+  return {
+    orderBy: state.orderBy
+  };
+}
 
-ResetBTN.defaultProps = {
-  maxWidth: "100%",
-  orderBy: ""
-};
-
-ResetBTN.handleClick = updateOrderBy => (
-  event: SyntheticMouseEvent<HTMLButtonElement>
-) => {
-  event.preventDefault();
-  updateOrderBy(event.currentTarget.textContent);
-};
+export default connect(mapStateToProps, actions)(OrderByBTN);

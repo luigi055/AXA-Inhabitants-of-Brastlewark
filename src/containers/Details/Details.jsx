@@ -19,6 +19,8 @@ type Props = {
 };
 
 const Details = ({ gnomeURL, gnomes }: Props) => {
+  // when page change take scroll to top
+  window.scroll(null, 0);
   const selectedGnome =
     gnomes &&
     gnomes.find(
@@ -48,7 +50,7 @@ const Details = ({ gnomeURL, gnomes }: Props) => {
       </Helmet>
       <DetailsRow>
         <LinkBack to="/" href="/">
-          {"< Back"}
+          {"⇦ Back To Home"}
         </LinkBack>
         {selectedGnome && <DetailsInfo gnome={selectedGnome} />}
       </DetailsRow>

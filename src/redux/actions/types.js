@@ -2,3 +2,4 @@ export const REQUEST_GNOMES = "REQUEST_GNOMES";
 export const SEARCH_TERM = "SEARCH_TERM";
 export const FILTER_BY_JOB = "FILTER_BY_JOB";
 export const ORDER_BY_FILTER = "ORDER_BY_FILTER";
+export const CURRENT_PAGE = "CURRENT_PAGE";

@@ -1,3 +1,4 @@
+// flow
 import styled from "styled-components";
 
 const OrderButton = styled.button`
@@ -14,12 +15,10 @@ const OrderButton = styled.button`
   padding: 20px 15px;
   outline-color: transparent;
   width: ${({ width }) => width || "50%"};
-
   &:hover {
     background: ${({ active, theme }) =>
       active ? theme.hoverColor : "#fcfcfc"};
   }
-
   @media screen and (min-width: 630px) {
     width: ${({ width }) => width || "33.333333%"};
   }

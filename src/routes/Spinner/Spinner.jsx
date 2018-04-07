@@ -4,6 +4,8 @@ import { Loading, Image } from "./SpinnerStyled";
 import spinner from "./spinner.gif";
 import loadingIMG from "./../../img/gnome-loading.png";
 
+// Simple spinner component that it's used
+// when loading async routes for code splitting
 const Spinner = () => (
   <Loading>
     <Image

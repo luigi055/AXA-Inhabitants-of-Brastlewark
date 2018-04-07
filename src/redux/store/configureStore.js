@@ -2,12 +2,14 @@
 import { applyMiddleware, createStore, compose } from "redux";
 import thunk from "redux-thunk";
 import reducers from "./../reducers/reducers";
+// import type { State } from "./../../../flow-typed";
 
 const initialValues = {
   gnomes: [],
   searchTerm: "",
   filterBy: "All",
-  orderBy: ""
+  orderBy: "",
+  currentPage: 0
 };
 
 const configure = (initialState = initialValues) => {

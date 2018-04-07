@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+// themes value received thenaks to themesProvider
+// so themes variables are available in all styled components
 const HeaderComponent = styled.header`
   align-items: center;
   background: ${({ theme }) => theme.headerBG};

@@ -5,9 +5,19 @@ import Header from "./../containers/Header/Header";
 import Footer from "./../components/Footer/Footer";
 import AsynchRoutes from "./AsyncRoutes";
 
+// Declaring Flow typed for our Props
 type Props = {
   match: any
 };
+
+/* 
+            Thanks to babel-plugin-syntax-dynamic-import and 
+          babel-plugin-dynamic-import-webpack we can load our module on the fly
+          and pass in as props
+          AsynchRoutes is a Higher Order Component that receive dynamically our
+          route and generate our bundle
+          */
+
 const Routes = () => (
   <div>
     <Header />

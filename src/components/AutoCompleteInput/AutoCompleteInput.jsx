@@ -13,7 +13,8 @@ type Props = {
   showLabel: boolean,
   placeholder: string,
   stateName: string,
-  parentUpdateState: Function
+  parentUpdateState: Function,
+  updateCurrentPage: Function
 };
 
 type State = {
@@ -80,10 +81,6 @@ class AutoCompleteInput extends Component<Props, State> {
     const { searchTerm, open } = this.state;
     return (
       <ContainerInput
-        ref={node => {
-          // Arrow function should not return an assigment
-          this.node = node;
-        }}
         className="autocomplete"
         showLabel={this.props.showLabel}
         htmlFor={this.props.stateName}
@@ -93,11 +90,13 @@ class AutoCompleteInput extends Component<Props, State> {
           <span> {this.props.labelName} </span>
         )}
         <InputSearch
+          autoComplete="off"
           type="text"
           id={this.props.stateName}
           onChange={AutoCompleteInput.handleTermChange(
             this.updateLocalState,
             this.updateParentState,
+            this.props.updateCurrentPage,
             this.props.autoCompleteItems,
             this.props.maxSuggests,
             this.props.includeSearchTerm
@@ -110,7 +109,8 @@ class AutoCompleteInput extends Component<Props, State> {
           onKeyDown={AutoCompleteInput.handleCloseAutoComplete(
             this.updateLocalState,
             this.state,
-            this.updateParentState
+            this.updateParentState,
+            this.props.updateCurrentPage
           )}
           value={searchTerm}
           placeholder={this.props.placeholder}
@@ -132,6 +132,7 @@ class AutoCompleteInput extends Component<Props, State> {
 AutoCompleteInput.handleTermChange = (
   updateLocalState: Function,
   updateParentState: Function,
+  updateCurrentPage: Function,
   autoCompleteItems: Array<string>,
   maxSuggests: number,
   includeSearchTerm: boolean
@@ -171,9 +172,11 @@ AutoCompleteInput.handleTermChange = (
   updateLocalState({
     searchTerm: event.currentTarget.value,
     open: AutoCompleteList.length !== 0,
-    suggestedItems: AutoCompleteList
+    suggestedItems: AutoCompleteList,
+    currentOption: -1 // disable suggest the first item, to enable switch it to 0
   });
   updateParentState(event.currentTarget.value);
+  updateCurrentPage(0);
 };
 
 AutoCompleteInput.handleFocusInput = (
@@ -193,29 +196,30 @@ AutoCompleteInput.handleFocusInput = (
 AutoCompleteInput.handleCloseAutoComplete = (
   updateLocalState: Function,
   state: string,
-  updateParentState: Function
+  updateParentState: Function,
+  updateCurrentPage: Function
 ) => (event: SyntheticKeyboardEvent<HTMLInputElement>) => {
-  // const suggestedItemLength =
-  //   suggestedItems.length === 0
-  //     ? suggestedItems.length
-  //     : suggestedItems.length - 1;
-  // console.log(suggestedItemLength);
-  // Close autocomplete when press Enter or Esc
   if (event.which === 27) {
+    // Close autocomplete when press  Esc
     updateLocalState({
       open: false,
       suggestedItems: []
     });
   } else if (event.keyCode === 13) {
     // When Enter
-    updateLocalState(prevState => ({
+    // if there is a suggested option pass it to the state if not check if -1 and just send the current search term
+    const processSearch =
+      state.currentOption === -1
+        ? state.searchTerm
+        : state.suggestedItems[state.currentOption];
+    updateLocalState({
       open: false,
-      // searchTerm: prevState.suggestedItems[prevState.currentOption],
-      searchTerm: prevState.searchTerm,
+      searchTerm: processSearch,
       suggestedItems: [],
-      currentOption: 0
-    }));
-    // updateParentState(state.suggestedItems[state.currentOption]);
+      currentOption: -1
+    });
+    updateCurrentPage(0); // Get pagination to page 1
+    updateParentState(processSearch);
   } else if (event.keyCode === 39) {
     // When right arrow
     updateLocalState(prevState => ({
@@ -240,8 +244,9 @@ AutoCompleteInput.handleCloseAutoComplete = (
   } else if (event.keyCode === 38) {
     // when arrow down
     updateLocalState(prevState => {
+      // If not selected option return -1
       const minOption =
-        prevState.currentOption < 1 ? 0 : prevState.currentOption - 1;
+        prevState.currentOption < 1 ? -1 : prevState.currentOption - 1;
       return {
         currentOption: minOption
       };

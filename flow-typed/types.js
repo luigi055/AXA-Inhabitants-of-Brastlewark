@@ -19,10 +19,13 @@ export type Gnome = {
 
 export type State = {
   gnomes: Array<Gnome>,
-  searchTerm: string
+  searchTerm: string,
+  currentPage: number,
+  filterBy: string,
+  orderBy: string,
 };
 
-declare type ActionType = "REQUEST_GNOMES" | "SEARCH_TERM" | "FILTER_BY_JOB" | 'ORDER_BY_FILTER';
+declare type ActionType = "CURRENT_PAGE" | "REQUEST_GNOMES" | "SEARCH_TERM" | "FILTER_BY_JOB" | 'ORDER_BY_FILTER';
 
 declare type ActionT<A: ActionType, P> = {|
   type: A,
@@ -34,3 +37,4 @@ export type Action =
   | ActionT<"REQUEST_GNOMES", Gnome>;
   | ActionT<"FILTER_BY_JOB", string>;
   | ActionT<"ORDER_BY_FILTER", string>;
+  | ActionT<"CURRENT_PAGE", number>;

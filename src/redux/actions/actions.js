@@ -5,7 +5,8 @@ import {
   REQUEST_GNOMES,
   SEARCH_TERM,
   FILTER_BY_JOB,
-  ORDER_BY_FILTER
+  ORDER_BY_FILTER,
+  CURRENT_PAGE
 } from "./types";
 
 export const getGnomes = (gnomes: Array<Gnome>) => ({
@@ -44,7 +45,12 @@ export const filterByJob = (job: string) => ({
   payload: job
 });
 
-export const orderBy = (order: string) => ({
+export const updateOrderBy = (order: string) => ({
   type: ORDER_BY_FILTER,
   payload: order
+});
+
+export const getCurrentPage = (page: number) => ({
+  type: CURRENT_PAGE,
+  payload: page
 });

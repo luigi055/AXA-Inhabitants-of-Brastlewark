@@ -11,8 +11,11 @@ import Main from "./containers/Main";
 import "./favicon.ico";
 /* eslint-enable */
 
+// Get the Redux storage and connect it to our application
+// Now every component can connect to the redux state container
 const store = configure();
 
+// ThemeProvider pass the default variables for our styled components theme
 const App = () => (
   <Provider store={store}>
     <ThemeProvider theme={theme}>
