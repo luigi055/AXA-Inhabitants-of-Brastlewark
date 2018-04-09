@@ -1,11 +1,6 @@
 // @flow
 import styled from "styled-components";
 
-export const FormSearch = styled.div`
-  display: block;
-  width: 100%;
-`;
-
 export const HomeWrapper = styled.main`
   margin: 10px auto;
   max-width: 900px;
@@ -14,15 +9,6 @@ export const HomeWrapper = styled.main`
   @media (max-width: 990px) {
     max-width: 610px;
   }
-`;
-
-export const FormRow = HomeWrapper.withComponent("div").extend`
-  background: inherit;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin: 0;
-  width: 100%;
 `;
 
 export const HomeRow = styled.div`

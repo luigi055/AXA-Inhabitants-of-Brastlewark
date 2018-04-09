@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing Actions Creators Update Search State Action Creator should generate "big gnome" in searchTerm State 1`] = `
+Object {
+  "payload": "big gnome",
+  "type": "SEARCH_TERM",
+}
+`;
+
+exports[`Testing Actions Creators Update filterByJob Action Creator should generate "Mason" in filterBy State 1`] = `
+Object {
+  "payload": "Mason",
+  "type": "FILTER_BY_JOB",
+}
+`;
+
+exports[`Testing Actions Creators Update orderBy Action Creator should generate "Mason" in filterBy State 1`] = `
+Object {
+  "payload": "Mason",
+  "type": "ORDER_BY_FILTER",
+}
+`;

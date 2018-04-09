@@ -1,8 +1,8 @@
 // @flow
-import chai, { expect } from "chai";
-import configureMockStore from "redux-mock-store";
+import moxios from "moxios";
 import thunk from "redux-thunk";
-import fetchMock from "fetch-mock";
+import { gnomesAPI } from "./../../functions";
+import { fakeGnomesData, localStorage } from "./../seed";
 import {
   REQUEST_GNOMES,
   SEARCH_TERM,
@@ -13,32 +13,44 @@ import {
   getGnomes,
   getSearchText,
   filterByJob,
-  orderBy,
+  updateOrderBy,
   fetchGnomes
 } from "./../../redux/actions/actions";
 
+// emulate localStorage API
+window.localStorage = localStorage;
+
+// Tetsing all Actions Creator
 describe("Testing Actions Creators", () => {
-  describe("fetch inhabitants of Brastlewark Action Creator", () => {
-    let mockStore;
-    beforeEach(() => {
-      mockStore = configureMockStore([thunk]);
-    });
+  beforeEach(() => {
+    // pass custom axios instance
+    moxios.install();
+  });
 
-    it("should generate all Gnomes from API", (done: Function) => {
-      const store = mockStore({ gnomes: [] });
-
-      const expectedActions = [
-        {
-          type: REQUEST_GNOMES,
-          payload: [{ id: 1, name: "gnomin" }]
-        }
-      ];
-
-      // emulating redux-thunk
-      store.dispatch(getGnomes([{ id: 1, name: "gnomin" }]));
-      expect(store.getActions()).to.be.deep.equal(expectedActions);
-
-      done();
+  afterEach(() => {
+    moxios.uninstall();
+  });
+  test("fetchGnomes", (done: Function) => {
+    const dispatchMock = jest.fn();
+    // Mocking axios
+    moxios.withMock(() => {
+      // Invoking fetchGnomes with dispaych mock
+      fetchGnomes()(dispatchMock);
+      moxios.wait(() => {
+        const request = moxios.requests.mostRecent();
+        // emulate the api get request
+        request
+          .respondWith({
+            status: 200,
+            response: { Brastlewark: fakeGnomesData }
+          })
+          .then(url => {
+            expect(request.url).toEqual(gnomesAPI);
+            expect(dispatchMock).toBeCalledWith(getGnomes(fakeGnomesData));
+            done();
+          })
+          .catch(err => done(err));
+      });
     });
   });
 
@@ -51,7 +63,8 @@ describe("Testing Actions Creators", () => {
       };
 
       const searchActionCreator = getSearchText(searchGnome);
-      expect(searchActionCreator).to.be.deep.equal(action);
+      expect(searchActionCreator).toEqual(action);
+      expect(searchActionCreator).toMatchSnapshot();
     });
   });
 
@@ -64,7 +77,8 @@ describe("Testing Actions Creators", () => {
       };
 
       const filterByJobActionCreator = filterByJob(filterByJobValue);
-      expect(filterByJobActionCreator).to.be.deep.equal(action);
+      expect(filterByJobActionCreator).toEqual(action);
+      expect(filterByJobActionCreator).toMatchSnapshot();
     });
   });
   describe("Update orderBy Action Creator", () => {
@@ -75,8 +89,9 @@ describe("Testing Actions Creators", () => {
         payload: orderByValue
       };
 
-      const orderByActionCreator = orderBy(orderByValue);
-      expect(orderByActionCreator).to.be.deep.equal(action);
+      const orderByActionCreator = updateOrderBy(orderByValue);
+      expect(orderByActionCreator).toEqual(action);
+      expect(orderByActionCreator).toMatchSnapshot();
     });
   });
 });

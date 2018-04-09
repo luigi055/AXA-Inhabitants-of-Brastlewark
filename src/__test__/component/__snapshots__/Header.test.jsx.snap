@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test Header should render Header correctly 1`] = `
+<styled.header>
+  <div
+    className="row"
+  >
+    <h1>
+      <Link
+        href="/"
+        replace={false}
+        to="/"
+      >
+        BrastlewarkerS
+      </Link>
+    </h1>
+  </div>
+</styled.header>
+`;

@@ -2,6 +2,7 @@
 import React from "react";
 import SelectComponent from "./SelectStyled";
 
+// Declare props types with FLow
 type Props = {
   updateState: Function,
   stateName: string,
@@ -12,6 +13,7 @@ type Props = {
   updateCurrentPage: Function
 };
 
+// Using spread operator to create a new array with the defaultValue first
 const Select = ({
   updateState,
   stateName,
@@ -39,10 +41,12 @@ const Select = ({
   </SelectComponent>
 );
 
+// When select change
 Select.onChange = (updateState: Function, updateCurrentPage: Function) => (
   event: SyntheticEvent<HTMLSelectElement>
 ) => {
   event.preventDefault();
+  // Update the filter by jobs state
   updateState(event.currentTarget.value);
   // Reset pagination to 0 when change filter
   updateCurrentPage(0);

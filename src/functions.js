@@ -1,4 +1,5 @@
 // @flow
+export const gnomesAPI = "https://raw.githubusercontent.com/rrafols/mobile_test/master/data.json";
 export function convertColorsToHex(color: string) {
   const colorName = color.toLowerCase();
   let hexColor: "";

@@ -4,19 +4,21 @@ import ReactDOM from "react-dom";
 import Suggestions from "./Suggestions/Suggestions";
 import { ContainerInput, InputSearch } from "./AutoCompleteInputStyled";
 
+// Declare Props Types
 type Props = {
   autoCompleteItems: Array<string>,
-  maxSuggests: number,
-  maxWidth: string,
-  includeSearchTerm: boolean,
-  labelName: string,
-  showLabel: boolean,
-  placeholder: string,
+  maxSuggests?: number,
+  maxWidth?: string,
+  includeSearchTerm?: boolean,
+  labelName?: string,
+  showLabel?: boolean,
+  placeholder?: string,
   stateName: string,
   parentUpdateState: Function,
   updateCurrentPage: Function
 };
 
+// Declare states flow types
 type State = {
   searchTerm: string,
   open: boolean,
@@ -42,22 +44,19 @@ class AutoCompleteInput extends Component<Props, State> {
   };
 
   componentDidMount() {
+    // When component mount listen click event when click on document
     document.addEventListener("click", this.handleClickOutside);
   }
 
   componentWillUnmount() {
+    // Remove click event handler on document when component unmounts
     document.removeEventListener("click", this.handleClickOutside);
   }
 
   handleClickOutside = event => {
-    // console.log(this.node);
-    // const thisComponent = this.domRef.contains;
-    // console.log(thisComponent, e.target);
-    // if (!thisComponent || !thisComponent.contains(event.target)) {
-    //   this.setState({
-    //     open: false
-    //   });
-    // }
+    // Control when user clicks outside the input components
+    // if the suggestions box is open when click uutside will close the
+    // box
     /* eslint-disable */
     // IT'S BEST PRACTICE TO USE REF INSTEAD
     // I had to use finDOMNode method provisionally since
@@ -71,6 +70,7 @@ class AutoCompleteInput extends Component<Props, State> {
     }
   };
 
+  // control the entire state control of this component
   updateLocalState = (state: object) => this.setState(state);
   // This will update parent state which control this component
   updateParentState = (searchTerm: string) => {
@@ -85,7 +85,7 @@ class AutoCompleteInput extends Component<Props, State> {
         showLabel={this.props.showLabel}
         htmlFor={this.props.stateName}
         maxWidth={this.props.maxWidth}
-      >
+      > 
         {this.props.labelName.length > 0 && (
           <span> {this.props.labelName} </span>
         )}
@@ -129,6 +129,14 @@ class AutoCompleteInput extends Component<Props, State> {
   }
 }
 
+// this approach on declaring events handlers improves
+// Readability and maintainance also improve time loading
+// since the class and components will be read first by
+// the browser engine - also it's the unique reference for all
+// others components which would need this
+
+// Handling onChange event
+// it will receive data to update the parent state
 AutoCompleteInput.handleTermChange = (
   updateLocalState: Function,
   updateParentState: Function,
@@ -148,6 +156,8 @@ AutoCompleteInput.handleTermChange = (
   // Since i accessed to the DOM element that's associated with the event handler
   // I defined, i used currentTarget.
 
+  // Every time the user type a new letter the filter method
+  // Will detect matches with the names of every gnome in the array
   const AutoCompleteList = autoCompleteItems
     .filter(autoCompleteItem => {
       // If the search item is include within the array item this will show
@@ -168,23 +178,29 @@ AutoCompleteInput.handleTermChange = (
       );
     })
     .splice(0, maxSuggests);
+    // Control how many suggestions will be show 
 
   updateLocalState({
-    searchTerm: event.currentTarget.value,
-    open: AutoCompleteList.length !== 0,
-    suggestedItems: AutoCompleteList,
+    searchTerm: event.currentTarget.value, // update the controlled component
+    open: AutoCompleteList.length !== 0, // If there is not a match close the suggestion box
+    suggestedItems: AutoCompleteList, // return an array of all suggestions
     currentOption: -1 // disable suggest the first item, to enable switch it to 0
   });
+  // update global state of the parent search term
   updateParentState(event.currentTarget.value);
+  // When search for a new letter pagination will reset to page 1
   updateCurrentPage(0);
 };
 
+// handle on Focus
 AutoCompleteInput.handleFocusInput = (
   updateLocalState: Function,
   searchTerm: string,
   updateParentState: Function
 ) => (event: SyntheticFocusEvent<HTMLInputElement>) => {
   event.preventDefault();
+  // if there are at least one letter in the input and if it is focused
+  // open the box with suggestions
   const open = searchTerm > 0;
 
   updateLocalState({
@@ -193,14 +209,16 @@ AutoCompleteInput.handleFocusInput = (
   updateParentState(searchTerm);
 };
 
+// handle on keydown
 AutoCompleteInput.handleCloseAutoComplete = (
   updateLocalState: Function,
   state: string,
   updateParentState: Function,
   updateCurrentPage: Function
 ) => (event: SyntheticKeyboardEvent<HTMLInputElement>) => {
+  // When user press ESC key
+  // Close the suggestion box and reset all suggestions
   if (event.which === 27) {
-    // Close autocomplete when press  Esc
     updateLocalState({
       open: false,
       suggestedItems: []
@@ -208,6 +226,9 @@ AutoCompleteInput.handleCloseAutoComplete = (
   } else if (event.keyCode === 13) {
     // When Enter
     // if there is a suggested option pass it to the state if not check if -1 and just send the current search term
+    // reset the suggestions and close the box and algo depending of the position
+    // of the current option it will return the suggested option or tbe search Term
+    // only if the current option is bigger or equal to 0 it will return the suggestion 
     const processSearch =
       state.currentOption === -1
         ? state.searchTerm
@@ -218,19 +239,16 @@ AutoCompleteInput.handleCloseAutoComplete = (
       suggestedItems: [],
       currentOption: -1
     });
-    updateCurrentPage(0); // Get pagination to page 1
+    // Get pagination to page 1
+    updateCurrentPage(0);
     updateParentState(processSearch);
-  } else if (event.keyCode === 39) {
-    // When right arrow
-    updateLocalState(prevState => ({
-      open: false,
-      searchTerm: prevState.suggestedItems[prevState.currentOption],
-      suggestedItems: [],
-      currentOption: 0
-    }));
-    updateParentState(state.suggestedItems[state.currentOption]);
   } else if (event.keyCode === 40) {
     // When arrow up
+    // select and option controlled by keyboard
+    // everytime the user clicks arrow up button it will decrease
+    // the suggestion options
+    // suggestion options cant be less than -1 so in this case 
+    // when click up always returns -1
     updateLocalState(prevState => {
       const arrayItem = prevState.suggestedItems.length - 1;
       const maxOption =
@@ -242,7 +260,11 @@ AutoCompleteInput.handleCloseAutoComplete = (
       };
     });
   } else if (event.keyCode === 38) {
-    // when arrow down
+        // When arrow down
+    // select and option controlled by keyboard
+    // everytime the user clicks arrow down button it will increase
+    // the suggestion options
+
     updateLocalState(prevState => {
       // If not selected option return -1
       const minOption =

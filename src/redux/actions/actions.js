@@ -1,5 +1,6 @@
 // @flow
 import axios from "axios";
+import { gnomesAPI } from "./../../functions";
 import type { Gnome } from "./../../../flow-typed/types";
 import {
   REQUEST_GNOMES,
@@ -23,9 +24,7 @@ export const fetchGnomes = () => async (dispatch: Function) => {
   }
 
   try {
-    const { data: { Brastlewark: gnomes } } = await axios.get(
-      "https://raw.githubusercontent.com/rrafols/mobile_test/master/data.json"
-    );
+    const { data: { Brastlewark: gnomes } } = await axios.get(gnomesAPI);
     const gnomesToJSON = JSON.stringify(gnomes);
     localStorage.setItem("gnomes", gnomesToJSON);
     dispatch(getGnomes(gnomes));

@@ -1,5 +1,4 @@
 // @flow
-import chai, { expect } from "chai";
 import {
   REQUEST_GNOMES,
   SEARCH_TERM,
@@ -31,7 +30,7 @@ describe("Testing reducers", () => {
 
       const res = gnomesReducer([], action);
 
-      expect(res).to.be.equal(action.payload);
+      expect(res).toEqual(action.payload);
     });
   });
   describe("searchReducer", () => {
@@ -43,7 +42,7 @@ describe("Testing reducers", () => {
 
       const res = searchReducer("", action);
 
-      expect(res).to.be.equal(action.payload);
+      expect(res).toEqual(action.payload);
     });
   });
   describe("orderByReducer", () => {
@@ -55,7 +54,7 @@ describe("Testing reducers", () => {
 
       const res = orderByReducer("", action);
 
-      expect(res).to.be.equal(action.payload);
+      expect(res).toEqual(action.payload);
     });
   });
   describe("professionsReducer", () => {
@@ -67,7 +66,7 @@ describe("Testing reducers", () => {
 
       const res = professionsReducer("", action);
 
-      expect(res).to.be.equal(action.payload);
+      expect(res).toEqual(action.payload);
     });
   });
 });
